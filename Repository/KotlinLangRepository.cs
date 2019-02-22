@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class KotlinLangRepository
+    public class KotlinLangRepository: IKotlinLangRepository
     {
         public async Task<IEnumerable<BookIntegration>> GetBooks()
         {

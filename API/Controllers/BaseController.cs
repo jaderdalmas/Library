@@ -12,7 +12,7 @@ namespace Api.Controllers
         /// <summary>
         /// Book Service
         /// </summary>
-        protected IBookService BookService { get; set; }
+        protected IBookService Service { get; private set; }
 
         /// <summary>
         /// Constructor

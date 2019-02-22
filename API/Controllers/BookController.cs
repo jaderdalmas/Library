@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Model;
-using Repository;
 using Service;
 using System.Threading.Tasks;
 
@@ -14,22 +13,19 @@ namespace Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            //BookService.
-            var rep = new KotlinLangRepository();
-            return Ok(await rep.GetBooks());
+            return Ok(await Service.GetBooks());
         }
 
         [HttpGet("{id}"), ProducesResponseType(201, Type = typeof(BookDTO))]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            return Ok("value");
+            return Ok(Service.GetBookById(id));
         }
 
         [HttpPost, ProducesResponseType(201, Type = typeof(BookDTO))]
-        public IActionResult Post([FromBody] BookRequest value)
+        public async Task<IActionResult> Post([FromBody] BookRequest value)
         {
-            var response = new BookDTO();
-            return Created(string.Format("api/book/{0}", response.ID), value);
+            return Created(string.Format("api/book/{0}", Service.PostBook(value).ID), value);
         }
     }
 }
