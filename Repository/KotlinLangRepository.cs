@@ -50,7 +50,7 @@ namespace Repository
             return list;
         }
 
-        public async Task<long> GetISBN(string url)
+        public async Task<string> GetISBN(string url)
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(url);
@@ -61,8 +61,6 @@ namespace Repository
 
             if (!string.IsNullOrWhiteSpace(html) && html.Contains("ISBN"))
             {
-                int isbnIndex = html.LastIndexOf("ISBN");
-
                 var partial = html.Substring(html.IndexOf("ISBN") + 4, 50).Replace("-", "").Replace(":", "");
 
                 var init = partial.LastIndexOf('>');
@@ -70,12 +68,12 @@ namespace Repository
                 if (init > end) { init = -1; end = partial.IndexOf('<'); }
                 if (end > 0) { partial = partial.Substring(init + 1, end - init - 1); }
 
-                return long.Parse(partial.Trim());
+                return partial.Trim();
 
                 //Stok Kodu
             }
 
-            return 0;
+            return "Unavailable";
         }
     }
 }

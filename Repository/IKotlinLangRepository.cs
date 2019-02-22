@@ -17,6 +17,6 @@ namespace Repository
         /// </summary>
         /// <param name="url">Url</param>
         /// <returns>ISBN as Long</returns>
-        Task<long> GetISBN(string url);
+        Task<string> GetISBN(string url);
     }
 }
