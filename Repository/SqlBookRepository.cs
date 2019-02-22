@@ -10,12 +10,12 @@ namespace Repository
     {
         public SqlBookRepository(IConfiguration configuration) : base(configuration) { }
 
-        public async Task<BookDTO> GetBook(int Id)
+        public async Task<BookDto> GetBook(int Id)
         {
             var parameters = new DynamicParameters();
             parameters.Add("@Id", Id, DbType.Int32);
 
-            return await GetConnection.ExecuteScalarAsync<BookDTO>("dbo.SpS_Book", parameters, commandType: CommandType.StoredProcedure);
+            return await GetConnection.ExecuteScalarAsync<BookDto>("dbo.SpS_Book", parameters, commandType: CommandType.StoredProcedure);
         }
 
         public async Task<int> PostBook(BookRequest book)

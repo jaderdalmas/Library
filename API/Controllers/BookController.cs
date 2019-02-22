@@ -19,13 +19,13 @@ namespace Api.Controllers
             return Ok(await Service.GetBooks());
         }
 
-        [HttpGet("{id}"), ValidateActionParameters, ProducesResponseType(201, Type = typeof(BookDTO))]
+        [HttpGet("{id}"), ValidateActionParameters, ProducesResponseType(201, Type = typeof(BookDto))]
         public async Task<IActionResult> Get([Range(1, int.MaxValue)]int id)
         {
             return Ok(await Service.GetBookById(id));
         }
 
-        [HttpPost, ProducesResponseType(200, Type = typeof(BookDTO))]
+        [HttpPost, ProducesResponseType(200, Type = typeof(BookDto))]
         public async Task<IActionResult> Post([FromBody] BookRequest value)
         {
             var response = await Service.PostBook(value);

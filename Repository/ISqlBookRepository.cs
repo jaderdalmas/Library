@@ -10,7 +10,7 @@ namespace Repository
         /// </summary>
         /// <param name="Id">Book id</param>
         /// <returns>Book DTO</returns>
-        Task<BookDTO> GetBook(int Id);
+        Task<BookDto> GetBook(int Id);
 
         /// <summary>
         /// Post Book as Requested

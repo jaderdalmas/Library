@@ -15,11 +15,11 @@ namespace Model
         [StringLength(2, MinimumLength = 2)]
         public string Language { get; set; }
 
-        public BookDTO GetBookDTO
+        public BookDto GetBookDTO
         {
             get
             {
-                return new BookDTO()
+                return new BookDto()
                 {
                     Title = Title,
                     Description = Description,
