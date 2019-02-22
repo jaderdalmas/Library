@@ -13,6 +13,8 @@ namespace Model
         [StringLength(2, MinimumLength = 2)]
         public string Language { get; set; }
 
+        public long ISBN { get; set; }
+
         public string URL { get; set; }
     }
 }
