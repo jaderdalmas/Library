@@ -1,18 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Model;
 using Repository;
-using System.Collections.Generic;
+using Service;
 using System.Threading.Tasks;
 
-namespace API.Controllers
+namespace Api.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
-    public class BookController : ControllerBase
+    public class BookController : BaseController
     {
+        public BookController(IBookService service) : base(service) { }
+
         [HttpGet]
         public async Task<IActionResult> Get()
         {
+            //BookService.
             var rep = new KotlinLangRepository();
             return Ok(await rep.GetBooks());
         }

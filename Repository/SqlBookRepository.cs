@@ -2,7 +2,7 @@
 
 namespace Repository
 {
-    public class SqlBookRepository
+    public class SqlBookRepository : ISqlBookRepository
     {
     }
 }

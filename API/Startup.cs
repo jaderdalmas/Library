@@ -1,39 +1,69 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Api.Filters;
+using Api.StartUp;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
-namespace API
+namespace Api
 {
+    /// <summary>
+    /// API StartUp
+    /// </summary>
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        /// <summary>
+        /// StartUp Configuration
+        /// </summary>
+        public IConfiguration Configuration { get; }
+        /// <summary>
+        /// StartUp Environment
+        /// </summary>
+        public IHostingEnvironment Environment { get; }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="configuration">Configuration</param>
+        /// <param name="env">Environment</param>
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
+            Environment = env;
         }
 
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to add services to the container.
+        /// </summary>
+        /// <param name="services">Services Collection</param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(options =>
+            {
+                //options.Filters.Add<CustomExceptionsFilter>();
+                //options.Filters.Add<ValidateModelStateAttribute>();
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            //Cors.Register(Configuration, services);
+            //Authorization.Register(services);
+            //Authentication.Register(services, Configuration, Environment);
+            Repositories.Register(services);
+            Swagger.Register(services);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="app">Application Builder</param>
+        public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment()) { app.UseDeveloperExceptionPage(); }
-            else { app.UseHsts(); }
+            if (Environment.IsDevelopment()) { app.UseDeveloperExceptionPage(); }
+            else { app.UseHsts(); } // Error Page Redirection
 
+            //Localization.Configure(app);
+            Swagger.Configure(app, Environment);
+            //app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
         }
