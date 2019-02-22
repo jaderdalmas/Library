@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using Microsoft.Extensions.Configuration;
 using Model;
 using System;
 using System.Collections.Generic;
@@ -8,12 +9,14 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class KotlinLangRepository: IKotlinLangRepository
+    public class KotlinLangRepository : BaseRepository, IKotlinLangRepository
     {
+        public KotlinLangRepository(IConfiguration configuration) : base(configuration) { }
+
         public async Task<IEnumerable<BookIntegration>> GetBooks()
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("https://kotlinlang.org/docs/books.html");
+            client.BaseAddress = new Uri(KotlinLangSite);
 
             HtmlDocument doc = new HtmlDocument();
             doc.Load(await client.GetStreamAsync(""));

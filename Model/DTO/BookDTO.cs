@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Model
 {
-    public class BookDTO
+    public class BookDTO : IValidatableObject
     {
         public int ID { get; set; }
 
@@ -16,5 +17,10 @@ namespace Model
 
         [StringLength(2, MinimumLength = 2)]
         public string Language { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (ISBN < 1000000000000 || ISBN > 9999999999999) { yield return new ValidationResult($"Invalid {nameof(ISBN)}", new[] { "ISBN" }); }
+        }
     }
 }

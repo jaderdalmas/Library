@@ -42,7 +42,7 @@ namespace Api
             services.AddMvc(options =>
             {
                 //options.Filters.Add<CustomExceptionsFilter>();
-                //options.Filters.Add<ValidateModelStateAttribute>();
+                options.Filters.Add<ValidateModelStateAttribute>();
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             //Cors.Register(Configuration, services);

@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Api.Filters;
+using Microsoft.AspNetCore.Mvc;
 using Model;
 using Service;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace Api.Controllers
@@ -16,8 +18,8 @@ namespace Api.Controllers
             return Ok(await Service.GetBooks());
         }
 
-        [HttpGet("{id}"), ProducesResponseType(201, Type = typeof(BookDTO))]
-        public async Task<IActionResult> Get(int id)
+        [HttpGet("{id}"), ValidateActionParameters, ProducesResponseType(201, Type = typeof(BookDTO))]
+        public async Task<IActionResult> Get([Range(1, int.MaxValue)]int id)
         {
             return Ok(Service.GetBookById(id));
         }
