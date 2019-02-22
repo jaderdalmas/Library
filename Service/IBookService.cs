@@ -8,8 +8,8 @@ namespace Service
     {
         Task<IEnumerable<BookIntegration>> GetBooks();
 
-        BookDTO GetBookById(int id);
+        Task<BookDTO> GetBookById(int id);
 
-        BookDTO PostBook(BookRequest book);
+        Task<BookDTO> PostBook(BookRequest book);
     }
 }

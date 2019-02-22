@@ -4,6 +4,15 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <RootNamespace>Api</RootNamespace>
     <AssemblyName>Api</AssemblyName>
+    <Authors>JaderDalmas</Authors>
+    <Product>Sebo</Product>
+    <Copyright>JaderDalmas</Copyright>
+    <PackageTags>Api;Sebo</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netcoreapp2.1\Api.xml</DocumentationFile>
+    <OutputPath>bin\Debug\netcoreapp2.1</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

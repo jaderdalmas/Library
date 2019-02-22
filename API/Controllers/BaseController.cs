@@ -20,7 +20,7 @@ namespace Api.Controllers
         /// <param name="bookService">Book Service</param>
         public BaseController(IBookService bookService = null)
         {
-            BookService = bookService;
+            Service = bookService;
         }
     }
 }

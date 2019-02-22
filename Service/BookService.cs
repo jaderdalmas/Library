@@ -14,14 +14,17 @@ namespace Service
             return await KotlinLangRepository.GetBooks();
         }
 
-        public BookDTO GetBookById(int id)
+        public async Task<BookDTO> GetBookById(int id)
         {
-            return null;
+            return await SqlRepository.GetBook(id);
         }
 
-        public BookDTO PostBook(BookRequest book)
+        public async Task<BookDTO> PostBook(BookRequest book)
         {
-            return null;
+            var response = book.GetBookDTO;
+            response.ID = await SqlRepository.PostBook(book);
+
+            return response;
         }
     }
 }

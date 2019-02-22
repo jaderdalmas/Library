@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Model;
 using Service;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
@@ -12,7 +13,7 @@ namespace Api.Controllers
     {
         public BookController(IBookService service) : base(service) { }
 
-        [HttpGet]
+        [HttpGet, ProducesResponseType(200, Type = typeof(IEnumerable<BookIntegration>))]
         public async Task<IActionResult> Get()
         {
             return Ok(await Service.GetBooks());
@@ -21,13 +22,15 @@ namespace Api.Controllers
         [HttpGet("{id}"), ValidateActionParameters, ProducesResponseType(201, Type = typeof(BookDTO))]
         public async Task<IActionResult> Get([Range(1, int.MaxValue)]int id)
         {
-            return Ok(Service.GetBookById(id));
+            return Ok(await Service.GetBookById(id));
         }
 
-        [HttpPost, ProducesResponseType(201, Type = typeof(BookDTO))]
+        [HttpPost, ProducesResponseType(200, Type = typeof(BookDTO))]
         public async Task<IActionResult> Post([FromBody] BookRequest value)
         {
-            return Created(string.Format("api/book/{0}", Service.PostBook(value).ID), value);
+            var response = await Service.PostBook(value);
+
+            return Created(string.Format("api/book/{0}", response.ID), response);
         }
     }
 }

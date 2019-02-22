@@ -14,5 +14,19 @@ namespace Model
 
         [StringLength(2, MinimumLength = 2)]
         public string Language { get; set; }
+
+        public BookDTO GetBookDTO
+        {
+            get
+            {
+                return new BookDTO()
+                {
+                    Title = Title,
+                    Description = Description,
+                    ISBN = ISBN,
+                    Language = Language
+                };
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using System.Data.SqlClient;
 
 namespace Repository
 {
@@ -22,6 +23,21 @@ namespace Repository
         {
             Cnn = configuration["ConnectionString:SqlServer"];
             KotlinLangSite = configuration["ConnectionString:KotlinLangSite"];
+        }
+
+        /// <summary>
+        /// Get a new sql connection
+        /// </summary>
+        /// <returns>Sql connection</returns>
+        protected SqlConnection GetConnection
+        {
+            get
+            {
+                var cnn = new SqlConnection(Cnn);
+                cnn.Open();
+
+                return cnn;
+            }
         }
     }
 }
