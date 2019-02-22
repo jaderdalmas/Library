@@ -4,13 +4,25 @@ using Microsoft.Extensions.Configuration;
 
 namespace Api
 {
-    public class Program
+    /// <summary>
+    /// Api program
+    /// </summary>
+    public static class Program
     {
+        /// <summary>
+        /// Main Program
+        /// </summary>
+        /// <param name="args">Args</param>
         public static void Main(string[] args)
         {
             CreateWebHostBuilder(args).Build().Run();
         }
 
+        /// <summary>
+        /// Create Web host Builder
+        /// </summary>
+        /// <param name="args">args</param>
+        /// <returns>IWebHostBuilder</returns>
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseKestrel(c => c.AddServerHeader = false)

@@ -21,7 +21,7 @@ namespace Service
 
         public async Task<BookDto> PostBook(BookRequest book)
         {
-            var response = book.GetBookDTO;
+            var response = book.GetBookDTO();
             response.ID = await SqlRepository.PostBook(book);
 
             return response;

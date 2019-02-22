@@ -35,7 +35,8 @@ namespace Api.Controllers
         /// </summary>
         /// <param name="id">Book Id</param>
         /// <returns>Book Dto</returns>
-        [HttpGet("{id}"), ValidateActionParameters, ProducesResponseType(201, Type = typeof(BookDto))]
+        [HttpGet("{id}"), ValidateActionParameters]
+        [ProducesResponseType(200, Type = typeof(BookDto)), ProducesResponseType(204)]
         public async Task<IActionResult> Get([Range(1, int.MaxValue)]int id)
         {
             return Ok(await Service.GetBookById(id));
@@ -46,7 +47,7 @@ namespace Api.Controllers
         /// </summary>
         /// <param name="value">Book Request</param>
         /// <returns>Book Dto</returns>
-        [HttpPost, ProducesResponseType(200, Type = typeof(BookDto))]
+        [HttpPost, ProducesResponseType(201, Type = typeof(BookDto))]
         public async Task<IActionResult> Post([FromBody] BookRequest value)
         {
             var response = await Service.PostBook(value);

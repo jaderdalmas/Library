@@ -19,21 +19,18 @@ namespace Model
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (long.TryParse(ISBN, out long intISBN)) { yield return new ValidationResult($"Invalid {nameof(ISBN)} not numeric", new[] { "ISBN" }); }
+            if (!long.TryParse(ISBN, out long intISBN)) { yield return new ValidationResult($"Invalid {nameof(ISBN)} not numeric", new[] { "ISBN" }); }
         }
 
-        public BookDto GetBookDTO
+        public BookDto GetBookDTO()
         {
-            get
+            return new BookDto()
             {
-                return new BookDto()
-                {
-                    Title = Title,
-                    Description = Description,
-                    ISBN = ISBN,
-                    Language = Language
-                };
-            }
+                Title = Title,
+                Description = Description,
+                ISBN = ISBN,
+                Language = Language
+            };
         }
     }
 }

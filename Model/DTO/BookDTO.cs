@@ -2,7 +2,7 @@
 {
     public class BookDto
     {
-        public int ID { get; set; }
+        public long ID { get; set; }
 
         public string Title { get; set; }
 

@@ -22,6 +22,7 @@ namespace Api.StartUp
 
             // Repository
             services.AddScoped(typeof(ISqlBookRepository), typeof(SqlBookRepository));
+            services.AddScoped(typeof(IKotlinLangRepository), typeof(KotlinLangRepository));
         }
 
         //private static UserInfo GetUserInfo(IServiceProvider provider)

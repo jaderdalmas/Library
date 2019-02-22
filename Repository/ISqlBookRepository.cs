@@ -17,6 +17,6 @@ namespace Repository
         /// </summary>
         /// <param name="book">Request Book</param>
         /// <returns>Book id</returns>
-        Task<int> PostBook(BookRequest book);
+        Task<long> PostBook(BookRequest book);
     }
 }
