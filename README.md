@@ -9,20 +9,20 @@ AppSettings has the strings to connect to the DataBase (under Api Project)
 
 > Environment
 
-https://dotnet.microsoft.com/download/dotnet-core/2.1 --dotnet core 2.1.*
+https://dotnet.microsoft.com/download/dotnet-core/2.1 (dotnet core 2.1.*)
 
-https://www.microsoft.com/en-us/download/details.aspx?id=48264 --IIS Express
+https://www.microsoft.com/en-us/download/details.aspx?id=48264 (IIS Express)
 
-> Build:
+> Build: (commands should be run over command prompt)
 
 dotnet restore api/api.csproj
 
 dotnet build api/api.csproj
 
-> Run:
+> Run: (commands should be run over command prompt)
 
-dotnet run --project api/api.csproj --It runs over IIS Express and dotnet core 2.1.8
+dotnet run --project api/api.csproj (It runs over IIS Express and dotnet core 2.1.8)
 
-> Test:
+> Test: (commands should be run over command prompt)
 
-dotnet test unittest/unittest.csproj --For test purpouses
+dotnet test unittest/unittest.csproj (For test purpouses)
