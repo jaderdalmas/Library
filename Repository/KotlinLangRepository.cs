@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Model;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -11,6 +12,8 @@ namespace Repository
 {
     public class KotlinLangRepository : BaseRepository, IKotlinLangRepository
     {
+        public string Unavailable { get { return "Unavailable"; } }
+
         public KotlinLangRepository(IConfiguration configuration) : base(configuration) { }
 
         public async Task<IEnumerable<BookIntegration>> GetBooks()
@@ -29,7 +32,7 @@ namespace Repository
             List<BookIntegration> list = new List<BookIntegration>();
             for (int item = 0; item < urls.Count; item++)
             {
-                var url = urls[item].Attributes.AttributesWithName("href").First().Value.Trim();
+                var url = urls[item].GetAttributeValue("href", "").Trim();
                 if (url.Last().Equals('/')) { url = url.Substring(0, url.Length - 1); }
 
                 var desc = descs[item + (item.Equals(0) ? 0 : 2)].InnerHtml.Trim();
@@ -50,8 +53,20 @@ namespace Repository
             return list;
         }
 
+        #region ISBN 
+
         public async Task<string> GetISBN(string url)
         {
+            if (url.StartsWith("https://www.amazon") // Crypt
+             || url.StartsWith("http://www.fundamental-kotlin.com") // 500
+             || url.StartsWith("https://kotlinandroidbook.com") // No ISBN
+             || url.StartsWith("https://leanpub.com") // No ISBN
+             || url.StartsWith("https://store.raywenderlich.com") // No ISBN
+             || url.StartsWith("https://www.raywenderlich.com")) // No ISBN
+            {
+                return Unavailable;
+            }
+
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(url);
 
@@ -59,21 +74,53 @@ namespace Repository
             try { html = await client.GetStringAsync(""); }
             catch (Exception ex) { html = ex.Message; }
 
-            if (!string.IsNullOrWhiteSpace(html) && html.Contains("ISBN"))
+            if (!string.IsNullOrWhiteSpace(html) &&
+            (html.Contains("ISBN") || html.Contains("Stok Kodu")))
             {
-                var partial = html.Substring(html.IndexOf("ISBN") + 4, 50).Replace("-", "").Replace(":", "");
-
-                var init = partial.LastIndexOf('>');
-                var end = partial.LastIndexOf('<');
-                if (init > end) { init = -1; end = partial.IndexOf('<'); }
-                if (end > 0) { partial = partial.Substring(init + 1, end - init - 1); }
-
-                return partial.Trim();
-
-                //Stok Kodu
+                if (url.Contains("manning.com"))
+                {
+                    return GetManningCom(html);
+                }
+                else if (url.StartsWith("https://www.packtpub.com"))
+                {
+                    return GetPacktpubCom(html);
+                }
+                else if (url.StartsWith("https://www.kuramkitap.com"))
+                {
+                    return GetKuramkitapCom(html);
+                }
+                else if (url.StartsWith("https://www.editions-eni.fr"))
+                {
+                    return GetEditionsEniFr(html);
+                }
             }
 
-            return "Unavailable";
+            return Unavailable;
         }
+
+        private string GetManningCom(string html)
+        {
+            return html.Substring(html.IndexOf("ISBN") + 4, 15).Trim();
+        }
+
+        private string GetPacktpubCom(string html)
+        {
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(html);
+
+            return doc.DocumentNode.SelectNodes("//@isbn").First().GetAttributeValue("isbn", "");
+        }
+
+        private string GetEditionsEniFr(string html)
+        {
+            return html.Substring(html.IndexOf("ISBN") + 4, 20).Replace(":", "").Replace("-", "").Trim();
+        }
+
+        private string GetKuramkitapCom(string html)
+        {
+            return html.Substring(html.IndexOf("Stok Kodu") + 70, 13).Trim();
+        }
+
+        #endregion
     }
 }
