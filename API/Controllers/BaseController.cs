@@ -6,7 +6,9 @@ namespace Api.Controllers
     /// <summary>
     /// Base Controller
     /// </summary>
-    [ApiController]
+    //[Authorize(Authorization.Policy), Authorize(Roles = "lf_admin,lf_cadastro,lf_ec")]
+    //[EnableCors(Cors.Policy)]
+    [Produces("application/json")]
     public class BaseController : ControllerBase
     {
         /// <summary>
