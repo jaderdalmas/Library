@@ -50,6 +50,8 @@ namespace Api
             //Authentication.Register(services, Configuration, Environment);
             Repositories.Register(services);
             Swagger.Register(services);
+            HealthCheck.Register(services, Configuration);
+            Compression.Register(services);
         }
 
         /// <summary>
@@ -63,6 +65,9 @@ namespace Api
 
             //Localization.Configure(app);
             Swagger.Configure(app, Environment);
+            HealthCheck.Configure(app);
+            Compression.Configure(app);
+
             //app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
