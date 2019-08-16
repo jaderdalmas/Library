@@ -26,10 +26,8 @@ namespace Api.StartUp
         public static void Register(IServiceCollection services, IConfiguration configuration)
         {
             services.AddHealthChecks()
-                .AddSqlServer(configuration["ConnectionStrings:SQL_Database"], name: "ListoDatabase")
-                .AddSqlServer(configuration["ConnectionStrings:SQL_External"], name: "ListoExternal")
-                .AddSqlServer(configuration["ConnectionStrings:SQL_SCD"], name: "ListoSCD")
-                .AddMySql(configuration["ConnectionStrings:MySQL"], name: "MySQL");
+                //.AddMySql(configuration["ConnectionString:MySQL"], name: "MySQL")
+                .AddSqlServer(configuration["ConnectionString:SqlServer"], name: "SqlServer");
         }
 
         /// <summary>
