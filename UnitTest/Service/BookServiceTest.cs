@@ -12,7 +12,7 @@ namespace UnitTest.Service
         {
             get
             {
-                return new BookService(new SqlBookRepositoryMockTest(), null);
+                return new BookService(new SqlBookRepositoryMockTest(), new KotlinLangRepositoryMockTest());
             }
         }
 
@@ -20,6 +20,14 @@ namespace UnitTest.Service
         public void GetBookById1()
         {
             var result = GetService.GetBookById(1).Result;
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void GetBook()
+        {
+            var result = GetService.GetBooks().Result;
 
             Assert.IsNotNull(result);
         }
