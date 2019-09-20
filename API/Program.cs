@@ -25,7 +25,7 @@ namespace Api
            .WriteTo.File("logs\\log-.txt", rollingInterval: RollingInterval.Day)
            .CreateLogger();
 
-            CreateWebHostBuilder(args).Run();
+            CreateWebHostBuilder(args).Build().Run();
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Api
         /// </summary>
         /// <param name="args">args</param>
         /// <returns>IWebHostBuilder</returns>
-        public static IWebHost CreateWebHostBuilder(string[] args) =>
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
             .UseKestrel(c => c.AddServerHeader = false)
             .ConfigureAppConfiguration((builderContext, config) =>
@@ -44,7 +44,6 @@ namespace Api
             })
             //.UseIISIntegration()
             .UseStartup<Startup>()
-            .UseSerilog()
-            .Build();
+            .UseSerilog();
     }
 }

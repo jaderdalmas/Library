@@ -41,14 +41,15 @@ namespace Api
         {
             services.AddMvc(options =>
             {
-                //options.Filters.Add<CustomExceptionsFilter>();
+                options.Filters.Add<CustomExceptionsFilter>();
+                options.Filters.Add<NotificationFilter>();
                 options.Filters.Add<ValidateModelStateAttribute>();
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             //Cors.Register(Configuration, services);
             //Authorization.Register(services);
             //Authentication.Register(services, Configuration, Environment);
-            Repositories.Register(services);
+            DependencyInjection.Register(services);
             Swagger.Register(services);
             HealthCheck.Register(services, Configuration);
             Compression.Register(services);

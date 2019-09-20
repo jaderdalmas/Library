@@ -1,13 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Repository;
-using Service;
 
 namespace Api.StartUp
 {
     /// <summary>
     /// Api Repositories
     /// </summary>
-    public static class Repositories
+    public static class DependencyInjection
     {
         /// <summary>
         /// Repositories Register
@@ -16,19 +14,17 @@ namespace Api.StartUp
         public static void Register(IServiceCollection services)
         {
             // services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            //services.AddScoped<IUserInfo>(provider => GetUserInfo(provider));
+            //services.AddScoped(typeof(INotification), typeof(NotificationProvider));
 
-            // Service
-            services.AddScoped(typeof(IBookService), typeof(BookService));
-
-            // Repository
-            services.AddScoped(typeof(ISqlBookRepository), typeof(SqlBookRepository));
-            services.AddScoped(typeof(IKotlinLangRepository), typeof(KotlinLangRepository));
+            Service.DependencyInjection.Register(services);
+            Repository.DependencyInjection.Register(services);
         }
 
         //private static UserInfo GetUserInfo(IServiceProvider provider)
         //{
         //    var context = provider.GetService<IHttpContextAccessor>();
-        //    return new UserInfo(context.HttpContext.User.FindFirstValue(Authentication.Name).Split('@')[1],
+        //    return new UserInfo(context.HttpContext.User.FindFirstValue(Authentication.Name),
         //        context.HttpContext.User.FindFirstValue(Authentication.UserId));
         //}
     }

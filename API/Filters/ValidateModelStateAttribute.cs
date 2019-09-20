@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Model.Pattern;
 
 namespace Api.Filters
 {
@@ -15,9 +16,7 @@ namespace Api.Filters
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             if (!context.ModelState.IsValid)
-            {
-                context.Result = new BadRequestObjectResult(context.ModelState);
-            }
+                context.Result = new BadRequestObjectResult(CustomReturn.ModelStateReturn(context.HttpContext.Request, context.ModelState));
         }
     }
 }
