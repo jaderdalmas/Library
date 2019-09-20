@@ -7,14 +7,8 @@ namespace UnitTest.Repository.MockTest
 {
     public class KotlinLangRepositoryMockTest : IKotlinLangRepository
     {
-        public Task<IEnumerable<BookIntegration>> GetBooks()
-        {
-            return Task.FromResult((IEnumerable<BookIntegration>)new List<BookIntegration>());
-        }
+        public Task<IEnumerable<BookIntegration>> GetBooks() => Task.FromResult((IEnumerable<BookIntegration>)new List<BookIntegration>());
 
-        public Task<string> GetISBN(string url)
-        {
-            return Task.FromResult("");
-        }
+        public Task<string> GetISBN(string url) => Task.FromResult("");
     }
 }

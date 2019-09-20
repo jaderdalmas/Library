@@ -6,14 +6,8 @@ namespace UnitTest.Repository.MockTest
 {
     public class SqlBookRepositoryMockTest : ISqlBookRepository
     {
-        public Task<BookDto> GetBook(int Id)
-        {
-            return Task.FromResult(new BookDto());
-        }
+        public Task<BookDto> GetBook(int Id) => Task.FromResult(new BookDto());
 
-        public Task<long> PostBook(BookRequest book)
-        {
-            return Task.FromResult((long)1);
-        }
+        public Task<long> PostBook(BookRequest book) => Task.FromResult((long)1);
     }
 }
