@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 
 namespace Repository
 {
-    public class BaseRepository
+    internal class BaseRepository
     {
         /// <summary>
         /// ConnectionString

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class SqlBookRepository : BaseRepository, ISqlBookRepository
+    internal class SqlBookRepository : BaseRepository, ISqlBookRepository
     {
         public SqlBookRepository(IConfiguration configuration) : base(configuration) { }
 

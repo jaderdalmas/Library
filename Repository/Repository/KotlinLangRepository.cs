@@ -3,14 +3,13 @@ using Microsoft.Extensions.Configuration;
 using Model;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class KotlinLangRepository : BaseRepository, IKotlinLangRepository
+    internal class KotlinLangRepository : BaseRepository, IKotlinLangRepository
     {
         public string Unavailable { get { return "Unavailable"; } }
 
