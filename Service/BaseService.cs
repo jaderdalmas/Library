@@ -2,7 +2,7 @@
 
 namespace Service
 {
-    public class BaseService
+    internal class BaseService
     {
         /// <summary>
         /// Book Repository

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Service
 {
-    public class BookService : BaseService, IBookService
+    internal class BookService : BaseService, IBookService
     {
         public BookService(ISqlBookRepository sqlRepository, IKotlinLangRepository kotlinLangRepository) : base(sqlRepository, kotlinLangRepository) { }
 
