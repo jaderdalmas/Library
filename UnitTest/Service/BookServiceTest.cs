@@ -1,38 +1,33 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Api;
 using Model;
-using Service;
-using UnitTest.Repository.MockTest;
+using System.Diagnostics.CodeAnalysis;
+using Tests.Services;
+using Xunit;
 
 namespace UnitTest.Service
 {
-    [TestClass]
-    public class BookServiceTest
+    [ExcludeFromCodeCoverage]
+    public class BookServiceTest : BaseServiceTest, IClassFixture<ServiceWebApplicationFactory<Startup>>
     {
-        public BookService GetService
-        {
-            get
-            {
-                return new BookService(new SqlBookRepositoryMockTest(), new KotlinLangRepositoryMockTest());
-            }
-        }
+        public BookServiceTest(ServiceWebApplicationFactory<Startup> factory) : base(factory) { }
 
-        [TestMethod]
+        [Fact]
         public void GetBookById1()
         {
-            var result = GetService.GetBookById(1).Result;
+            var result = GetBookService.GetBookById(1).Result;
 
-            Assert.IsNotNull(result);
+            Assert.NotNull(result);
         }
 
-        [TestMethod]
+        [Fact]
         public void GetBook()
         {
-            var result = GetService.GetBooks().Result;
+            var result = GetBookService.GetBooks().Result;
 
-            Assert.IsNotNull(result);
+            Assert.NotNull(result);
         }
 
-        [TestMethod]
+        [Fact]
         public void PostBook()
         {
             var book = new BookRequest()
@@ -43,9 +38,9 @@ namespace UnitTest.Service
                 Language = "BR"
             };
 
-            var result = GetService.PostBook(book).Result;
+            var result = GetBookService.PostBook(book).Result;
 
-            Assert.IsNotNull(result);
+            Assert.NotNull(result);
         }
     }
 }
